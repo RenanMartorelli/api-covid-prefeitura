@@ -3,21 +3,68 @@ var moment = require('moment');
 
 module.exports = (app, db) => {
 
-  app.group("/admin", (app) => {
+  app.get( "/estatistica", (req, res) =>
+  db.estatistica.findAll({
+      order: [
+        ['dataContagem','ASC']
+      ],
+      include: [ {
+        model: db.usuario,
+        attributes: ['id','nome']
+      },
+      {
+        model: db.bairro,
+        attributes: ['id','nome']
+       }
+     ]
+    }).then( (result) => res.json(result) )
+);
 
-    app.get( "/estatistica", (req, res) =>
-      db.estatistica.findAll({
-         include: [ {
-           model: db.usuario,
-           attributes: ['id','nome']
-          },
-          {
-            model: db.bairro,
-            attributes: ['id','nome']
-           }
-         ]
-        }).then( (result) => res.json(result) )
-    );
+app.get( "/estatistica-bairro", async (req, res) => {
+  var response = []
+  const resultDadosBairros = await db.estatistica.findAll({
+    attributes: [
+      'idBairro',
+      'tipoContagem',
+      [db.sequelize.fn('sum', db.sequelize.col('quantidade')), 'quantidade'],
+      [db.sequelize.fn("max", db.sequelize.col('estatistica.updatedAt')), 'atualizadoEm']
+    ],
+    group : ['idBairro','tipoContagem'],
+    raw: true,
+    include: [{
+        model: db.bairro,
+        attributes: ['nome']
+       }]
+  })
+
+  const resultBairros = await db.bairro.findAll({
+    attributes: ['id','nome']
+  })
+
+  resultBairros.forEach(bairro => {
+    response.push({
+      idBairro: bairro.id,
+      nomeBairro: bairro.nome,
+      obitos: 0,
+      confirmados: 0,
+      suspeitos: 0,
+      recuperados: 0,
+      atualizadoEm: '2000-01-01',
+    })
+  });
+
+  resultDadosBairros.forEach(dadoBairro => {
+    let index = response.findIndex(bairro => bairro.idBairro === dadoBairro.idBairro);
+    let tipoContagem = dadoBairro.tipoContagem
+    response[index][tipoContagem] = dadoBairro.quantidade;
+    // verifica qual a data mais recente de atualização.
+    dadoBairro.atualizadoEm = moment(dadoBairro.atualizadoEm).format('YYYY-MM-DD')
+    response[index].atualizadoEm = moment(response[index].atualizadoEm).isAfter(dadoBairro.atualizadoEm, 'day') ? response[index].atualizadoEm : dadoBairro.atualizadoEm;
+  })
+res.json(response) 
+});
+
+  app.group("/admin", (app) => {
   
     app.get( "/estatistica/:id", (req, res) =>
       db.estatistica.findByPk(req.params.id).then( (result) => res.json(result))
@@ -48,50 +95,6 @@ module.exports = (app, db) => {
         }
       }).then( (result) => res.json(result) )
     );
-
-    app.get( "/estatistica-bairro", async (req, res) => {
-      var response = []
-      const resultDadosBairros = await db.estatistica.findAll({
-        attributes: [
-          'idBairro',
-          'tipoContagem',
-          [db.sequelize.fn('sum', db.sequelize.col('quantidade')), 'quantidade'],
-          [db.sequelize.fn("max", db.sequelize.col('estatistica.updatedAt')), 'atualizadoEm']
-        ],
-        group : ['idBairro','tipoContagem'],
-        raw: true,
-        include: [{
-            model: db.bairro,
-            attributes: ['nome']
-           }]
-      })
-
-      const resultBairros = await db.bairro.findAll({
-        attributes: ['id','nome']
-      })
-
-      resultBairros.forEach(bairro => {
-        response.push({
-          idBairro: bairro.id,
-          nomeBairro: bairro.nome,
-          obitos: 0,
-          confirmados: 0,
-          suspeitos: 0,
-          atualizadoEm: '2000-01-01',
-        })
-      });
-
-      resultDadosBairros.forEach(dadoBairro => {
-        let index = response.findIndex(bairro => bairro.idBairro === dadoBairro.idBairro);
-        let tipoContagem = dadoBairro.tipoContagem
-        response[index][tipoContagem] = dadoBairro.quantidade;
-        // verifica qual a data mais recente de atualização.
-        dadoBairro.atualizadoEm = moment(dadoBairro.atualizadoEm).format('YYYY-MM-DD')
-        response[index].atualizadoEm = moment(response[index].atualizadoEm).isAfter(dadoBairro.atualizadoEm, 'day') ? response[index].atualizadoEm : dadoBairro.atualizadoEm;
-      })
-    res.json(response) 
-    });
-
   
     app.delete( "/estatistica/:id", (req, res) =>
       db.estatistica.destroy({

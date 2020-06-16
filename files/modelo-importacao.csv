@@ -1,0 +1,55 @@
+quantidade;bairro;tipo;data
+4;Jardim Luana;suspeitos;15/03/2020
+4;Nova Petrópolis;suspeitos;15/03/2020
+20;Jardim Filomeno;suspeitos;17/03/2020
+60;Adrilândia;suspeitos;19/03/2020
+120;Terra Bonita;suspeitos;21/03/2020
+210;Jardim Luana;suspeitos;23/03/2020
+400;Nova Petrópolis;suspeitos;25/03/2020
+600;Jardim Filomeno;suspeitos;27/03/2020
+720;Adrilândia;suspeitos;29/03/2020
+923;Terra Bonita;suspeitos;31/03/2020
+514;Jardim Luana;suspeitos;02/04/2020
+1100;Nova Petrópolis;suspeitos;04/04/2020
+1250;Jardim Filomeno;suspeitos;06/04/2020
+1900;Adrilândia;suspeitos;08/04/2020
+1800;Terra Bonita;suspeitos;10/04/2020
+1500;Jardim Luana;suspeitos;12/04/2020
+1400;Nova Petrópolis;suspeitos;14/04/2020
+1200;Jardim Filomeno;suspeitos;16/04/2020
+1123;Adrilândia;suspeitos;18/04/2020
+1;Terra Bonita;confirmados;21/03/2020
+2;Jardim Luana;confirmados;23/03/2020
+5;Nova Petrópolis;confirmados;24/03/2020
+10;Jardim Filomeno;confirmados;26/03/2020
+24;Adrilândia;confirmados;29/03/2020
+40;Terra Bonita;confirmados;31/03/2020
+38;Jardim Luana;confirmados;02/04/2020
+66;Nova Petrópolis;confirmados;04/04/2020
+111;Jardim Filomeno;confirmados;07/04/2020
+126;Adrilândia;confirmados;08/04/2020
+252;Terra Bonita;confirmados;10/04/2020
+300;Jardim Luana;confirmados;13/04/2020
+312;Nova Petrópolis;confirmados;14/04/2020
+476;Jardim Filomeno;confirmados;16/04/2020
+415;Adrilândia;confirmados;18/04/2020
+31;Terra Bonita;recuperados;07/04/2020
+55;Jardim Luana;recuperados;08/04/2020
+77;Nova Petrópolis;recuperados;10/04/2020
+120;Jardim Filomeno;recuperados;13/04/2020
+200;Adrilândia;recuperados;15/04/2020
+145;Terra Bonita;recuperados;17/04/2020
+170;Jardim Luana;recuperados;18/04/2020
+2;Nova Petrópolis;obitos;24/03/2020
+3;Jardim Filomeno;obitos;26/03/2020
+7;Adrilândia;obitos;29/03/2020
+6;Terra Bonita;obitos;31/03/2020
+11;Jardim Luana;obitos;02/04/2020
+15;Nova Petrópolis;obitos;04/04/2020
+22;Jardim Filomeno;obitos;07/04/2020
+27;Adrilândia;obitos;08/04/2020
+36;Terra Bonita;obitos;11/04/2020
+51;Jardim Luana;obitos;13/04/2020
+42;Nova Petrópolis;obitos;15/04/2020
+89;Jardim Filomeno;obitos;16/04/2020
+101;Adrilândia;obitos;18/04/2020

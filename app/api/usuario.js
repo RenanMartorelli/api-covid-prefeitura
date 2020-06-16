@@ -2,6 +2,18 @@ require('express-group-routes');
 
 module.exports = (app, db) => {
 
+    app.post("/usuario/requisitar-troca-senha", (req, res) => {
+    console.log(req.body)
+    db.usuario.update({
+      status: 'Nova senha requisitada'
+    },
+       {
+        where: {
+          usuario: req.body.usuario
+        }
+      }).then( (result) => res.json(result) )
+    });
+
     app.group("/admin", (app) => {
 
       app.get( "/usuario", (req, res) =>
@@ -47,7 +59,8 @@ module.exports = (app, db) => {
 
       app.patch( "/usuario/senha/:id", (req, res) =>
       db.usuario.update({
-        senha: req.body.senha
+        senha: req.body.senha,
+        status: 'ativo'
       },
       {
         where: {

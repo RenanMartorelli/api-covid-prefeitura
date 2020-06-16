@@ -2,10 +2,11 @@ require('express-group-routes');
 
 module.exports = (app, db) => {
 
+  app.get( "/mensagem", (req, res) =>
+    db.mensagem.findAll().then( (result) => res.json(result) )
+  );
+
   app.group("/admin", (app) => {
-    app.get( "/mensagem", (req, res) =>
-      db.mensagem.findAll().then( (result) => res.json(result) )
-    );
   
     app.get( "/mensagem/:id", (req, res) =>
       db.mensagem.findByPk(req.params.id).then( (result) => res.json(result))

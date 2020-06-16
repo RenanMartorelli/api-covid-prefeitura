@@ -3,7 +3,7 @@
     "username": "dev",
     "password": "greentrade@123",
     "database": "covid_prefeitura",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql",
     "operatorsAliases": false
   },
